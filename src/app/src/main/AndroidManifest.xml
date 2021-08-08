@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutPlanner">
+        <activity android:name=".NewExerciseActivity"
+            android:label="New exercise"
+            android:parentActivityName=".ExercisesActivity"></activity>
+        <activity
+            android:name=".ExercisesActivity"
+            android:label="Exercises"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".RoutinesActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

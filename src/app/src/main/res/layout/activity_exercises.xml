@@ -20,7 +20,7 @@
         app:tint="#fff" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRoutines"
+        android:id="@+id/rvExercises"
         android:layout_width="409dp"
         android:layout_height="601dp"
         app:layout_constraintBottom_toBottomOf="parent"

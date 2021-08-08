@@ -1,8 +1,11 @@
 package com.example.workoutplanner;
 
+import android.app.Activity;
 import android.content.Context;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import java.lang.reflect.Array;
 
@@ -36,5 +39,4 @@ public class Utils {
             Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show();
         }
     }
-
 }

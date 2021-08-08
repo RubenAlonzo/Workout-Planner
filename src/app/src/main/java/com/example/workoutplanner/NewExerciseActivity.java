@@ -45,6 +45,13 @@ public class NewExerciseActivity extends AppCompatActivity {
             String refLink = inputExerciseReferenceLink.getText().toString().trim();
             Exercise exercise = new Exercise(name, targetMuscles, refLink);
             exerciseRepository.AddExercise(exercise);
+            ClearInputs();
         }
+    }
+
+    private void ClearInputs(){
+        inputExerciseName.setText("");
+        inputExerciseTargetMuscles.setText("");
+        inputExerciseReferenceLink.setText("");
     }
 }

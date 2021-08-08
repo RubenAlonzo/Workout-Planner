@@ -15,7 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.workoutplanner.AlterExerciseActivity;
+import com.example.workoutplanner.Constants;
 import com.example.workoutplanner.R;
+import com.example.workoutplanner.Utils;
+
 import java.util.ArrayList;
 import Entities.Exercise;
 
@@ -51,9 +54,14 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             holder.imgLink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(currentExercise.getRefLink()));
-                    activity.startActivityForResult(intent, 1);
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse(currentExercise.getRefLink()));
+                        activity.startActivityForResult(intent, 1);
+                    }
+                    catch (Exception e){
+                        Utils.ToastMessage(context, "Invalid url: " + currentExercise.getRefLink() + "\n" + e.getMessage());
+                    }
                 }
             });
             holder.imgLink.setVisibility(View.VISIBLE);
@@ -68,7 +76,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AlterExerciseActivity.class);
-                intent.putExtra("exercise", currentExercise);
+                intent.putExtra(Constants.EXERCISE_EXTRA, currentExercise);
                 activity.startActivityForResult(intent, 1);
             }
         });

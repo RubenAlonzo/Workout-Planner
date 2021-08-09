@@ -55,6 +55,27 @@ public class ExerciseRepository {
         return exercises;
     }
 
+    public Exercise GetExerciseById(int exerciseId) {
+        Exercise exercise = new Exercise();
+        try {
+            String query = "SELECT * FROM " + dbMgr.TABLE_EXERCISE + " WHERE " + dbMgr.KEY_ID + " = " + exerciseId;
+            SQLiteDatabase db = dbMgr.getReadableDatabase();
+            if (db != null) {
+                Cursor cursor = db.rawQuery(query, null);
+                if (cursor.getCount() != 0) {
+                    exercise.setId(cursor.getInt(cursor.getColumnIndex(dbMgr.KEY_ID)));
+                    exercise.setName(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_NAME)));
+                    exercise.setTargetMuscles(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_TARGET_MUSCLE)));
+                    exercise.setRefLink(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_LINK)));
+                }
+            }
+        }
+        catch (SQLiteException e){
+            Utils.ToastMessage(dbMgr.context, e.getMessage());
+        }
+        return exercise;
+    }
+
     public void UpdateExercise(Exercise exercise) {
         try {
             SQLiteDatabase db = dbMgr.getWritableDatabase();

@@ -6,6 +6,10 @@ public class Exercise implements Serializable {
     private int id;
     private String name, targetMuscles, refLink;
 
+    public Exercise(){
+
+    }
+
     public Exercise(int id, String name, String targetMuscles, String refLink){
         this.id = id;
         this.name = name;

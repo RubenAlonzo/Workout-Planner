@@ -6,7 +6,7 @@ public class Routine {
     private int id, sets;
     private float setRest, estimatedDuration;
     private String title, targetMuscles, day;
-    private ArrayList<RoutineExercise> Exercises;
+    private ArrayList<RoutineExercise> routineExercises;
 
     public Routine(int id,
                    String title,
@@ -96,11 +96,11 @@ public class Routine {
         this.day = day;
     }
 
-    public ArrayList<RoutineExercise> getExercises() {
-        return Exercises;
+    public ArrayList<RoutineExercise> getRoutineExercises() {
+        return routineExercises;
     }
 
-    public void setExercises(ArrayList<RoutineExercise> exercises) {
-        Exercises = exercises;
+    public void setRoutineExercises(ArrayList<RoutineExercise> routineExercises) {
+        this.routineExercises = routineExercises;
     }
 }

@@ -5,6 +5,10 @@ public class RoutineExercise {
     private float timeOn, timeOff;
     private Exercise exercise;
 
+    public RoutineExercise(){
+
+    }
+
     public RoutineExercise(int id,
                            int idRoutine,
                            int idExercise,

@@ -1,8 +1,9 @@
 package Entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Routine {
+public class Routine implements Serializable {
     private int id, sets;
     private float setRest, estimatedDuration;
     private String title, targetMuscles, day;

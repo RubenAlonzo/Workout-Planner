@@ -36,8 +36,8 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
     @Override
     public RoutineAdapter.ViewHolder onCreateViewHolder(@NonNull @org.jetbrains.annotations.NotNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.exercise_row, parent, false);
-        return new RoutineAdapter.ViewHolder(view);
+        View view = inflater.inflate(R.layout.routine_row, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override

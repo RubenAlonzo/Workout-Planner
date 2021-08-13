@@ -1,6 +1,8 @@
 package Entities;
 
-public class RoutineExercise {
+import java.io.Serializable;
+
+public class RoutineExercise implements Serializable {
     private int id, idRoutine, idExercise, orderNumber, reps;
     private float timeOn, timeOff;
     private Exercise exercise;
@@ -39,6 +41,15 @@ public class RoutineExercise {
         this.reps = reps;
         this.timeOn = timeOn;
         this.timeOff = timeOff;
+    }
+
+    public RoutineExercise(Exercise exercise) {
+        this.idExercise = exercise.getId();
+        this.exercise = exercise;
+        this.orderNumber = 0;
+        this.reps = 0;
+        this.timeOn = 0;
+        this.timeOff = 0;
     }
 
     public int getId() {

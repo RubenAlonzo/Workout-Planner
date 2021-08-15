@@ -26,7 +26,7 @@ import DataAccess.ExerciseRepository;
 import Entities.Exercise;
 import Entities.RoutineExercise;
 
-public class NewRoutineActivity extends AppCompatActivity {
+public class NewRoutineActivity extends AppCompatActivity  implements RoutineExerciseEditDialog.RoutineExerciseDialogListener{
 
     EditText inputRoutineTitle, inputRoutineDuration, inputRoutineDay, inputRoutineSetRest, inputRoutineSets;
     Button btnAddRoutine, btnAddRoutineExercise;
@@ -86,10 +86,26 @@ public class NewRoutineActivity extends AppCompatActivity {
 
         dialog.show();
     }
+    @Override
+    public void RemoveRoutineExercise(int position) {
+        routineExercises.remove(position);
+        int arraySize = routineExercises.size();
+        for (int i = 0; i < arraySize; i++ ){
+            routineExercises.get(i).setOrderNumber(i + 1);
+        }
+        LoadRoutineExercises();
+    }
+
+    @Override
+    public void SaveRoutineExercise(RoutineExercise routineExercise) {
+        LoadRoutineExercises();
+    }
 
     public void LoadRoutineExercises(){
-        routineExerciseAdapter = new RoutineExerciseAdapter(NewRoutineActivity.this, this, routineExercises);
+        routineExerciseAdapter = new RoutineExerciseAdapter(NewRoutineActivity.this, this, routineExercises, getSupportFragmentManager());
         rvRoutineExercisesPreview.setAdapter(routineExerciseAdapter);
-        rvRoutineExercisesPreview.setLayoutManager(new LinearLayoutManager(NewRoutineActivity.this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(NewRoutineActivity.this);
+        linearLayoutManager.setStackFromEnd(true);
+        rvRoutineExercisesPreview.setLayoutManager(linearLayoutManager);
     }
 }

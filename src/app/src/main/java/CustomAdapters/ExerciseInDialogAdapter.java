@@ -54,7 +54,13 @@ public class ExerciseInDialogAdapter extends RecyclerView.Adapter<ExerciseInDial
         holder.exerciseDialogListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                routineExercises.add(0, new RoutineExercise(currentExercise));
+                RoutineExercise routineExercise = new RoutineExercise(currentExercise);
+                int arraySize = routineExercises.size();
+                for (int i = 0; i < arraySize; i++ ){
+                    routineExercises.get(i).setOrderNumber(i + 1);
+                }
+                routineExercise.setOrderNumber(arraySize + 1);
+                routineExercises.add(routineExercise);
                 dialog.dismiss();
                 Utils.ToastMessage(context, "You selected " + currentExercise.getName());
             }

@@ -12,11 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutplanner.AlterExerciseActivity;
 import com.example.workoutplanner.Constants;
 import com.example.workoutplanner.R;
+import com.example.workoutplanner.RoutineExerciseEditDialog;
 import com.example.workoutplanner.Utils;
 
 import java.util.ArrayList;
@@ -24,17 +27,18 @@ import java.util.ArrayList;
 import Entities.Exercise;
 import Entities.RoutineExercise;
 
-public class RoutineExerciseAdapter extends RecyclerView.Adapter<RoutineExerciseAdapter.ViewHolder>{
+public class RoutineExerciseAdapter extends RecyclerView.Adapter<RoutineExerciseAdapter.ViewHolder> {
 
     Context context;
     Activity activity;
     ArrayList<RoutineExercise> routineExercises;
-    Animation animation;
+    FragmentManager fragmentManager;
 
-    public RoutineExerciseAdapter(Activity activity, Context context, ArrayList<RoutineExercise> routineExercises){
+    public RoutineExerciseAdapter(Activity activity, Context context, ArrayList<RoutineExercise> routineExercises, FragmentManager fragmentManager){
         this.activity = activity;
         this.context = context;
         this.routineExercises = routineExercises;
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -51,13 +55,15 @@ public class RoutineExerciseAdapter extends RecyclerView.Adapter<RoutineExercise
         RoutineExercise currentRoutineExercise = routineExercises.get(position);
         holder.tvSelectedExerciseName.setText(String.valueOf(currentRoutineExercise.getExercise().getName()));
         holder.tvRoutineExerciseReps.setText(String.valueOf((currentRoutineExercise.getReps() == 0) ? "-" :currentRoutineExercise.getReps()));
-        holder.tvRoutineExerciseTimeOn.setText((currentRoutineExercise.getTimeOn() == 0) ? "-" : String.valueOf(currentRoutineExercise.getTimeOn()));
-        holder.tvRoutineExerciseTimeOff.setText((currentRoutineExercise.getTimeOff() == 0) ? "-" : String.valueOf(currentRoutineExercise.getTimeOff()));
+        holder.tvRoutineExerciseTimeOn.setText((currentRoutineExercise.getTimeOn() == 0) ? "-" : Utils.ConvertDecimalsToMinutes(currentRoutineExercise.getTimeOn()));
+        holder.tvRoutineExerciseTimeOff.setText((currentRoutineExercise.getTimeOff() == 0) ? "-" : Utils.ConvertDecimalsToMinutes(currentRoutineExercise.getTimeOff()));
         holder.tvRoutineExerciseOrderNo.setText("#" + currentRoutineExercise.getOrderNumber());
 
         holder.routineExerciseListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RoutineExerciseEditDialog editDialog = new RoutineExerciseEditDialog(currentRoutineExercise, position);
+                editDialog.show(fragmentManager, "editDialog");
                 Utils.ToastMessage(context, "You clicked on" + currentRoutineExercise.getExercise().getName());
             }
         });
@@ -80,9 +86,6 @@ public class RoutineExerciseAdapter extends RecyclerView.Adapter<RoutineExercise
             tvRoutineExerciseOrderNo = itemView.findViewById(R.id.tvRoutineExerciseOrderNo);
 
             routineExerciseListLayout = itemView.findViewById(R.id.routineExerciseListLayout);
-
-            animation = AnimationUtils.loadAnimation(context, R.anim.rows_up);
-            routineExerciseListLayout.setAnimation(animation);
         }
     }
 }

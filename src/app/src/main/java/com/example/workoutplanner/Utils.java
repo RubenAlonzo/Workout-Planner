@@ -39,4 +39,11 @@ public class Utils {
             Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show();
         }
     }
+
+    public static String ConvertDecimalsToMinutes(float decimalMinutes){
+        int minutes = (int)decimalMinutes;
+        float decimalPart = (minutes == 0) ? decimalMinutes : decimalMinutes % minutes;
+        int seconds = (int)(decimalPart * 60);
+        return ((minutes == 0) ? "00" : minutes) + ":" + ((seconds == 0) ? "00" : seconds);
+    }
 }

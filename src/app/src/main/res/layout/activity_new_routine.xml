@@ -75,14 +75,6 @@
             android:background="@color/white">
 
             <EditText
-                android:id="@+id/inputRoutineDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Duration"
-                android:inputType="number" />
-
-            <EditText
                 android:id="@+id/inputRoutineDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,20 +82,21 @@
                 android:ems="10"
                 android:hint="Day"
                 android:inputType="text" />
+
+            <EditText
+                android:id="@+id/inputRoutineDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Duration"
+                android:inputType="numberDecimal" />
+
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white">
-
-            <EditText
-                android:id="@+id/inputRoutineSetRest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Set rest"
-                android:inputType="number" />
 
             <EditText
                 android:id="@+id/inputRoutineSets"
@@ -113,6 +106,15 @@
                 android:ems="10"
                 android:hint="Sets"
                 android:inputType="number" />
+
+            <EditText
+                android:id="@+id/inputRoutineSetRest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Set rest"
+                android:inputType="numberDecimal" />
+
         </TableRow>
 
     </TableLayout>

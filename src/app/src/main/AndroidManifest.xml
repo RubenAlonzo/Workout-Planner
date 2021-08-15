@@ -11,28 +11,35 @@
         android:theme="@style/Theme.WorkoutPlanner">
         <activity android:name=".ViewRoutineActivity"
             android:label="Routine details"
+            android:screenOrientation="portrait"
             android:parentActivityName=".RoutinesActivity"></activity>
         <activity android:name=".NewRoutineActivity"
             android:label="New routine"
+            android:screenOrientation="portrait"
             android:parentActivityName=".RoutinesActivity"/>
         <activity
             android:name=".AlterExerciseActivity"
             android:label="Exercise editor"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ExercisesActivity" />
         <activity
             android:name=".NewExerciseActivity"
             android:label="New exercise"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ExercisesActivity" />
         <activity
             android:name=".ExercisesActivity"
             android:label="Exercises"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RoutinesActivity"
             android:label="Routines"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:label="Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

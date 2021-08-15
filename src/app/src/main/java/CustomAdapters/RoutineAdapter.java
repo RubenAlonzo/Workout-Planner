@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.workoutplanner.Constants;
 import com.example.workoutplanner.R;
+import com.example.workoutplanner.Utils;
 import com.example.workoutplanner.ViewRoutineActivity;
 import java.util.ArrayList;
 import Entities.Routine;
@@ -45,7 +46,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.ViewHold
         Routine currentExercise = routines.get(position);
         holder.tvRoutineTitle.setText(String.valueOf(currentExercise.getTitle()));
         holder.tvDay.setText(String.valueOf(currentExercise.getDay()));
-        holder.tvEstimatedTime.setText("Estimated duration: " + currentExercise.getEstimatedDuration());
+        holder.tvEstimatedTime.setText("Estimated duration: " + Utils.ConvertDecimalsToMinutes(currentExercise.getEstimatedDuration()) + " minutes");
         holder.routineListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

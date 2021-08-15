@@ -26,7 +26,6 @@ public class RoutinesActivity extends AppCompatActivity {
     RoutineAdapter routineAdapter;
     RecyclerView rvRoutines;
     RoutineRepository routineRepository;
-    ArrayList<Routine> FakeRoutines = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +39,8 @@ public class RoutinesActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        FakeRoutines.add(new Routine(1, "Push Thenx", "Monday", "Chest and Shoulders", 3, 2, 30));
-        FakeRoutines.add(new Routine(2, "Pull Athlean", "Wednesday", "Back and Biceps", 5, 2, 45));
-        FakeRoutines.add(new Routine(3, "Legs Thenx", "Friday", "Legs", 5, 2, 60));
-
         routineRepository = new RoutineRepository(new DatabaseManager(this));
-        routineAdapter = new RoutineAdapter(RoutinesActivity.this, this, FakeRoutines);
+        routineAdapter = new RoutineAdapter(RoutinesActivity.this, this, routineRepository.GetAllRoutines());
         rvRoutines.setAdapter(routineAdapter);
         rvRoutines.setLayoutManager(new LinearLayoutManager(RoutinesActivity.this));
     }

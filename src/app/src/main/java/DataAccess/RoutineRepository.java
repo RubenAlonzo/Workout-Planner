@@ -67,7 +67,7 @@ public class RoutineRepository {
         ArrayList<Routine> routineList = new ArrayList<>();
 
         try {
-            String query = "SELECT * FROM " + dbMgr.TABLE_ROUTINE + " ORDER BY " + dbMgr.KEY_ID + " DESC";
+            String query = "SELECT * FROM " + dbMgr.TABLE_ROUTINE + " ORDER BY " + dbMgr.ROUTINE_DAY + " DESC";
             SQLiteDatabase db = dbMgr.getReadableDatabase();
             if (db != null) {
                 Cursor cursor = db.rawQuery(query, null);
@@ -110,16 +110,21 @@ public class RoutineRepository {
             Utils.ToastMessage(dbMgr.context, e.getMessage());
         }
     }
-
-    public void DeleteExercise(Exercise exercise) {
+*/
+    public void DeleteRoutine(int routineId) {
+        SQLiteDatabase db = dbMgr.getWritableDatabase();
+        db.beginTransaction();
         try {
-            SQLiteDatabase db = dbMgr.getWritableDatabase();
-            long result = db.delete(dbMgr.TABLE_EXERCISE, dbMgr.KEY_ID + "=?", new String[]{String.valueOf(exercise.getId())});
-            Utils.ValidateDbResult(dbMgr.context, result, "Exercise deleted successfully!");
+            db.delete(dbMgr.TABLE_ROUTINE_EXERCISE, dbMgr.KEY_ROUTINE_ID + "=?", new String[]{String.valueOf(routineId)});
+            db.delete(dbMgr.TABLE_ROUTINE, dbMgr.KEY_ID + "=?", new String[]{String.valueOf(routineId)});
+            db.setTransactionSuccessful();
+            Utils.ToastMessage(dbMgr.context, "Routine deleted successfully!");
         }
         catch (SQLiteException e){
             Utils.ToastMessage(dbMgr.context, e.getMessage());
         }
+        finally {
+            db.endTransaction();
+        }
     }
- */
 }

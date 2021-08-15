@@ -63,10 +63,12 @@ public class ExerciseRepository {
             if (db != null) {
                 Cursor cursor = db.rawQuery(query, null);
                 if (cursor.getCount() != 0) {
-                    exercise.setId(cursor.getInt(cursor.getColumnIndex(dbMgr.KEY_ID)));
-                    exercise.setName(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_NAME)));
-                    exercise.setTargetMuscles(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_TARGET_MUSCLE)));
-                    exercise.setRefLink(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_LINK)));
+                    while (cursor.moveToNext()) {
+                        exercise.setId(cursor.getInt(cursor.getColumnIndex(dbMgr.KEY_ID)));
+                        exercise.setName(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_NAME)));
+                        exercise.setTargetMuscles(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_TARGET_MUSCLE)));
+                        exercise.setRefLink(cursor.getString(cursor.getColumnIndex(dbMgr.EXERCISE_LINK)));
+                    }
                 }
             }
         }

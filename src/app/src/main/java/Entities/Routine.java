@@ -28,17 +28,17 @@ public class Routine implements Serializable {
 
     public Routine(String title,
                    String day,
-                   String targetMuscles,
                    int sets,
                    float setRest,
-                   float estimatedDuration
+                   float estimatedDuration,
+                   ArrayList<RoutineExercise> routineExercises
     ) {
         this.title = title;
         this.day = day;
         this.sets = sets;
-        this.targetMuscles = targetMuscles;
         this.setRest = setRest;
         this.estimatedDuration = estimatedDuration;
+        this.routineExercises = routineExercises;
     }
 
     public int getId() {

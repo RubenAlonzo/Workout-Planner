@@ -21,10 +21,6 @@ public class RoutineExerciseRepository {
         exerciseRepository = new ExerciseRepository(dbManager);
     }
 
-    public void AddRoutineExercise(RoutineExercise routineExercise) {
-    }
-
-
     public ArrayList<RoutineExercise> GetAllRoutineExercisesByRoutineId(int routineId) {
         ArrayList<RoutineExercise> routineExerciseList = new ArrayList<>();
         try {

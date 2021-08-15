@@ -23,7 +23,9 @@ import CustomAdapters.ExerciseInDialogAdapter;
 import CustomAdapters.RoutineExerciseAdapter;
 import DataAccess.DatabaseManager;
 import DataAccess.ExerciseRepository;
+import DataAccess.RoutineRepository;
 import Entities.Exercise;
+import Entities.Routine;
 import Entities.RoutineExercise;
 
 public class NewRoutineActivity extends AppCompatActivity  implements RoutineExerciseEditDialog.RoutineExerciseDialogListener{
@@ -32,11 +34,12 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
     Button btnAddRoutine, btnAddRoutineExercise;
     RecyclerView rvRoutineExercisesPreview;
 
-    ExerciseRepository exerciseRepository;
     ArrayList<Exercise> exercises;
     ArrayList<RoutineExercise> routineExercises = new ArrayList<>();
-    Dialog dialog;
+
+    ExerciseRepository exerciseRepository;
     RoutineExerciseAdapter routineExerciseAdapter;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,55 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
         exercises = exerciseRepository.GetAllExercises();
 
         btnAddRoutineExercise.setOnClickListener(v -> showDialog(NewRoutineActivity.this));
+        btnAddRoutine.setOnClickListener(v -> ComposeRoutine());
+        btnAddRoutineExercise.setFocusableInTouchMode(true);
+        btnAddRoutineExercise.requestFocus();
+    }
+
+    private void ComposeRoutine(){
+        if(RoutineValidations()){
+            String title = inputRoutineTitle.getText().toString();
+            String day = inputRoutineDay.getText().toString();
+            float duration =  Float.parseFloat(inputRoutineDuration.getText().toString());
+            float setRest =  Float.parseFloat(inputRoutineSetRest.getText().toString());
+            int sets =  Integer.parseInt(inputRoutineSets.getText().toString());
+            Routine routine = new Routine(title, day, sets, setRest, duration, routineExercises);
+
+            RoutineRepository routineRepository = new RoutineRepository(new DatabaseManager(this));
+            routineRepository.AddRoutine(routine);
+            CleanInputs();
+            recreate();
+        }
+    }
+
+    private void CleanInputs(){
+        inputRoutineTitle.setText("");
+        inputRoutineDuration.setText("");
+        inputRoutineSets.setText("");
+        inputRoutineSetRest.setText("");
+        inputRoutineDay.setText("");
+        routineExercises = new ArrayList<>();
+    }
+
+    private boolean RoutineValidations(){
+        boolean areRequired = Utils.isAnyTextEmpty(inputRoutineTitle, inputRoutineDuration, inputRoutineDay, inputRoutineSetRest, inputRoutineSetRest);
+        if(areRequired){
+            Utils.ToastMessage(this, "Complete all inputs");
+            return false;
+        }
+        int exercisesCount = routineExercises.size();
+        if(exercisesCount < 1){
+            Utils.ToastMessage(this, "You need to add at least 1 exercise");
+            return false;
+        }
+        for (RoutineExercise item: routineExercises) {
+            if(
+                item.getReps() == 0 ){
+                Utils.ToastMessage(this, "Make sure all exercises are set up");
+                return false;
+            }
+        }
+        return true;
     }
 
     public void showDialog(Activity activity){
@@ -102,7 +154,7 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
     }
 
     public void LoadRoutineExercises(){
-        routineExerciseAdapter = new RoutineExerciseAdapter(NewRoutineActivity.this, this, routineExercises, getSupportFragmentManager());
+        routineExerciseAdapter = new RoutineExerciseAdapter(NewRoutineActivity.this, this, routineExercises, getSupportFragmentManager(), true);
         rvRoutineExercisesPreview.setAdapter(routineExerciseAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(NewRoutineActivity.this);
         linearLayoutManager.setStackFromEnd(true);

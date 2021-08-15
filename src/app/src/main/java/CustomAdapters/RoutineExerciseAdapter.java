@@ -33,12 +33,14 @@ public class RoutineExerciseAdapter extends RecyclerView.Adapter<RoutineExercise
     Activity activity;
     ArrayList<RoutineExercise> routineExercises;
     FragmentManager fragmentManager;
+    boolean allowClicks;
 
-    public RoutineExerciseAdapter(Activity activity, Context context, ArrayList<RoutineExercise> routineExercises, FragmentManager fragmentManager){
+    public RoutineExerciseAdapter(Activity activity, Context context, ArrayList<RoutineExercise> routineExercises, FragmentManager fragmentManager, boolean allowClicks){
         this.activity = activity;
         this.context = context;
         this.routineExercises = routineExercises;
         this.fragmentManager = fragmentManager;
+        this.allowClicks = allowClicks;
     }
 
     @NonNull
@@ -62,9 +64,13 @@ public class RoutineExerciseAdapter extends RecyclerView.Adapter<RoutineExercise
         holder.routineExerciseListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RoutineExerciseEditDialog editDialog = new RoutineExerciseEditDialog(currentRoutineExercise, position);
-                editDialog.show(fragmentManager, "editDialog");
-                Utils.ToastMessage(context, "You clicked on" + currentRoutineExercise.getExercise().getName());
+                if(allowClicks){
+                    RoutineExerciseEditDialog editDialog = new RoutineExerciseEditDialog(currentRoutineExercise, position);
+                    editDialog.show(fragmentManager, "editDialog");
+                }
+                else{
+                    Utils.ToastMessage(context, "You cannot access the edit dialog from this view");
+                }
             }
         });
     }

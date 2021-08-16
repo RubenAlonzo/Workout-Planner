@@ -52,7 +52,6 @@ public class RoutineRepository {
                 }
 
                 db.setTransactionSuccessful();
-                Utils.ToastMessage(dbMgr.context, "Routine added successfully!");
             }
         }
         catch (SQLiteException e){
@@ -94,23 +93,6 @@ public class RoutineRepository {
         return routineList;
     }
 
-/*
-    public void UpdateExercise(Exercise exercise) {
-        try {
-            SQLiteDatabase db = dbMgr.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(dbMgr.EXERCISE_NAME, exercise.getName());
-            contentValues.put(dbMgr.EXERCISE_TARGET_MUSCLE, exercise.getTargetMuscles());
-            contentValues.put(dbMgr.EXERCISE_LINK, exercise.getRefLink());
-
-            long result = db.update(dbMgr.TABLE_EXERCISE, contentValues, dbMgr.KEY_ID + "=?", new String[]{String.valueOf(exercise.getId())});
-            Utils.ValidateDbResult(dbMgr.context, result, "Exercise updated successfully!");
-        }
-        catch (SQLiteException e){
-            Utils.ToastMessage(dbMgr.context, e.getMessage());
-        }
-    }
-*/
     public void DeleteRoutine(int routineId) {
         SQLiteDatabase db = dbMgr.getWritableDatabase();
         db.beginTransaction();
@@ -118,7 +100,6 @@ public class RoutineRepository {
             db.delete(dbMgr.TABLE_ROUTINE_EXERCISE, dbMgr.KEY_ROUTINE_ID + "=?", new String[]{String.valueOf(routineId)});
             db.delete(dbMgr.TABLE_ROUTINE, dbMgr.KEY_ID + "=?", new String[]{String.valueOf(routineId)});
             db.setTransactionSuccessful();
-            Utils.ToastMessage(dbMgr.context, "Routine deleted successfully!");
         }
         catch (SQLiteException e){
             Utils.ToastMessage(dbMgr.context, e.getMessage());
@@ -126,5 +107,10 @@ public class RoutineRepository {
         finally {
             db.endTransaction();
         }
+    }
+
+    public void UpdateRoutine(Routine routine, int routineId) {
+        DeleteRoutine(routineId);
+        AddRoutine(routine);
     }
 }

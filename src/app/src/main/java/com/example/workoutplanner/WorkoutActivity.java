@@ -1,20 +1,20 @@
 package com.example.workoutplanner;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.media.ToneGenerator;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -108,33 +108,37 @@ public class WorkoutActivity extends AppCompatActivity {
 
                     tvTimerType.setText("Time Off"); // Add red color
                     tvTimer.setTextColor(getResources().getColor(R.color.red));
-                    timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOff());
-                    UpdateTimerText();
-                    currentExercisePos++;
+                    if(currentRoutineExercise.getTimeOn() == 0){
+                        timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOff());
+                        UpdateTimerText();
+                        currentExercisePos++;
+                    }
                 }
                 else {
                     tvCurrentExerciseReps.setText("N/A");
-                    if(isTimeOffDone == false){
-                        if(currentRoutineExercise.getTimeOff() != 0){
-                            tvTimerType.setText("Time Off"); // Add red color
-                            tvTimer.setTextColor(getResources().getColor(R.color.red));
-                            timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOff());
-                            UpdateTimerText();
-                            StartTimer();
-                            currentExercisePos++;
-                        }
-                        isTimeOffDone = true;
+                }
+
+                if(isTimeOffDone == false){
+                    if(currentRoutineExercise.getTimeOff() != 0){
+                        tvTimerType.setText("Time Off"); // Add red color
+                        tvTimer.setTextColor(getResources().getColor(R.color.red));
+                        timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOff());
+                        UpdateTimerText();
+                        StartTimer();
+                        currentExercisePos++;
                     }
-                    else {
-                        if(currentRoutineExercise.getTimeOn() != 0){
-                            tvTimerType.setText("Time On");
-                            tvTimer.setTextColor(getResources().getColor(R.color.purple_200));
-                            timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOn());
-                            UpdateTimerText();
-                            if(currentExercisePos != 1) StartTimer();
-                            isTimeOffDone = false;
-                            return;
-                        }
+                    isTimeOffDone = true;
+                    return;
+                }
+                else {
+                    if(currentRoutineExercise.getTimeOn() != 0){
+                        tvTimerType.setText("Time On");
+                        tvTimer.setTextColor(getResources().getColor(R.color.purple_200));
+                        timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOn());
+                        UpdateTimerText();
+                        if(currentExercisePos != 1) StartTimer();
+                        isTimeOffDone = false;
+                        return;
                     }
                 }
             }
@@ -213,5 +217,20 @@ public class WorkoutActivity extends AppCompatActivity {
         int seconds = (int) (timeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         tvTimer.setText(timeLeftFormatted);
+    }
+
+    @Nullable
+    @Override
+    public CharSequence onCreateDescription() {
+        return super.onCreateDescription();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.cancel();
+        timer = null;
+        soundPool.release();
+        soundPool = null;
     }
 }

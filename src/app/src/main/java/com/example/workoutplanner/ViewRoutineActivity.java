@@ -71,6 +71,7 @@ public class ViewRoutineActivity extends AppCompatActivity implements RoutineExe
         builder.setTitle("Are you sure you want to delete this routine?");
         builder.setPositiveButton("Yes", (dialog, which) -> {
             routineRepository.DeleteRoutine(currentRoutine.getId());
+            Utils.ToastMessage(this, "Routine deleted successfully!");
             finish();
         });
         builder.setNegativeButton("Cancel", (dialog, which) -> { });
@@ -88,6 +89,11 @@ public class ViewRoutineActivity extends AppCompatActivity implements RoutineExe
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.deleteRoutine){
             ConfirmationDialog();
+        }
+        if(item.getItemId() == R.id.editRoutine){
+            Intent intent = new Intent(this, NewRoutineActivity.class);
+            intent.putExtra(Constants.ROUTINE_EXTRA, currentRoutine);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

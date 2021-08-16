@@ -1,5 +1,6 @@
 package com.example.workoutplanner;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,6 +42,9 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
     RoutineExerciseAdapter routineExerciseAdapter;
     Dialog dialog;
 
+    Routine routineToEdit;
+    boolean isEditMode = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,22 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
         btnAddRoutine = findViewById(R.id.btnAddRoutine);
         btnAddRoutineExercise = findViewById(R.id.btnAddRoutineExercise);
         rvRoutineExercisesPreview = findViewById(R.id.rvRoutineExercisesPreview);
+
+        if(getIntent().hasExtra(Constants.ROUTINE_EXTRA)){
+            routineToEdit = (Routine) getIntent().getSerializableExtra(Constants.ROUTINE_EXTRA);
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("Edit routine");
+
+            inputRoutineTitle.setText(routineToEdit.getTitle());
+            inputRoutineDay.setText(routineToEdit.getDay());
+            inputRoutineDuration.setText(String.valueOf(routineToEdit.getEstimatedDuration()));
+            inputRoutineSetRest.setText(String.valueOf(routineToEdit.getSetRest()));
+            inputRoutineSets.setText(String.valueOf(routineToEdit.getSets()));
+            routineExercises = routineToEdit.getRoutineExercises();
+            btnAddRoutine.setText("Update routine");
+            LoadRoutineExercises();
+            isEditMode = true;
+        }
 
         exerciseRepository = new ExerciseRepository(new DatabaseManager(this));
         exercises = exerciseRepository.GetAllExercises();
@@ -74,7 +94,18 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
             Routine routine = new Routine(title, day, sets, setRest, duration, routineExercises);
 
             RoutineRepository routineRepository = new RoutineRepository(new DatabaseManager(this));
-            routineRepository.AddRoutine(routine);
+            if(isEditMode == false){
+                routineRepository.AddRoutine(routine);
+                Utils.ToastMessage(this, "Routine added successfully!");
+            }
+            else{
+                routineRepository.UpdateRoutine(routine, routineToEdit.getId());
+                Utils.ToastMessage(this, "Routine updated successfully!");
+                Intent intent = new Intent(NewRoutineActivity.this, ViewRoutineActivity.class);
+                intent.putExtra(Constants.ROUTINE_EXTRA, routine);
+                startActivity(intent);
+                return;
+            }
             CleanInputs();
             recreate();
         }

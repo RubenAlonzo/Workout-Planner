@@ -9,7 +9,6 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ public class WorkoutActivity extends AppCompatActivity {
     private static final long START_TIME = 5000; // 5 seconds
 
     TextView tvCurrentExerciseName, tvCurrentRoutineSet, tvCurrentExerciseReps, tvTimerType, tvTimer;
-    Button btnDone, btnStartPause;
+    Button btnTimerController;
 
     CountDownTimer timer;
     Routine currentRoutine;
@@ -45,8 +44,7 @@ public class WorkoutActivity extends AppCompatActivity {
         tvCurrentExerciseReps = findViewById(R.id.tvCurrentExerciseReps);
         tvTimerType = findViewById(R.id.tvTimerType);
         tvTimer = findViewById(R.id.tvTimer);
-        btnDone = findViewById(R.id.btnDone);
-        btnStartPause = findViewById(R.id.btnStartPause);
+        btnTimerController = findViewById(R.id.btnTimerController);
 
         ActionBar actionBar = getSupportActionBar();
         if(getIntent().hasExtra(Constants.ROUTINE_EXTRA)) {
@@ -62,9 +60,9 @@ public class WorkoutActivity extends AppCompatActivity {
         timeLeft = START_TIME;
         NextExercise();
 
-        btnDone.setOnClickListener(v -> StartTimer());
+        btnTimerController.setText("Start");
 
-        btnStartPause.setOnClickListener(v -> {
+        btnTimerController.setOnClickListener(v -> {
             if (isTimerRunning) {
                 PauseTimer();
             } else {
@@ -171,18 +169,20 @@ public class WorkoutActivity extends AppCompatActivity {
                 // Add a beeb
                 final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_RING, 100);
                 tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+                isTimerRunning = false;
+                btnTimerController.setText("Start");
                 NextExercise();
             }
         }.start();
 
         isTimerRunning = true;
-        btnStartPause.setText("Pause");
+        btnTimerController.setText("Pause");
     }
 
     private void PauseTimer() {
         timer.cancel();
         isTimerRunning = false;
-        btnStartPause.setText("Start");
+        btnTimerController.setText("Continue");
     }
 
     private void UpdateTimerText() {

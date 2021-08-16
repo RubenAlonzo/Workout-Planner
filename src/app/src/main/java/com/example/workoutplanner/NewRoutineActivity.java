@@ -101,7 +101,7 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
             return false;
         }
         for (RoutineExercise item: routineExercises) {
-            if(item.getReps() < 0 && item.getTimeOn() < 0.1 ){
+            if(item.getReps() <= 0 && item.getTimeOn() < 0.1 ){
                 Utils.ToastMessage(this, "Make sure all exercises are set up");
                 return false;
             }

@@ -66,7 +66,7 @@ public class RoutineRepository {
         ArrayList<Routine> routineList = new ArrayList<>();
 
         try {
-            String query = "SELECT * FROM " + dbMgr.TABLE_ROUTINE + " ORDER BY " + dbMgr.ROUTINE_DAY + " DESC";
+            String query = "SELECT * FROM " + dbMgr.TABLE_ROUTINE + " ORDER BY " + dbMgr.ROUTINE_DAY;
             SQLiteDatabase db = dbMgr.getReadableDatabase();
             if (db != null) {
                 Cursor cursor = db.rawQuery(query, null);

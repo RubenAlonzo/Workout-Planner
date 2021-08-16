@@ -157,18 +157,10 @@ public class NewRoutineActivity extends AppCompatActivity  implements RoutineExe
         recyclerView.setAdapter(adapterRe);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
+        recyclerView.setOnClickListener(v -> {
         });
 
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                LoadRoutineExercises();
-            }
-        });
+        dialog.setOnDismissListener(dialog -> LoadRoutineExercises());
 
         dialog.show();
     }

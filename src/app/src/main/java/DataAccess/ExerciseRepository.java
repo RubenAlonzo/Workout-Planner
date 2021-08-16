@@ -34,7 +34,7 @@ public class ExerciseRepository {
     public ArrayList<Exercise> GetAllExercises() {
         ArrayList<Exercise> exercises = new ArrayList<>();
         try {
-            String query = "SELECT * FROM " + dbMgr.TABLE_EXERCISE + " ORDER BY " + dbMgr.KEY_ID + " DESC";
+            String query = "SELECT * FROM " + dbMgr.TABLE_EXERCISE + " ORDER BY " + dbMgr.EXERCISE_NAME;
             SQLiteDatabase db = dbMgr.getReadableDatabase();
             if (db != null) {
                 Cursor cursor = db.rawQuery(query, null);

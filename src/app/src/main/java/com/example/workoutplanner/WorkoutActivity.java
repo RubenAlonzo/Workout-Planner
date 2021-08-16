@@ -62,7 +62,7 @@ public class WorkoutActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                     .build();
 
             soundPool = new SoundPool.Builder()
@@ -70,7 +70,7 @@ public class WorkoutActivity extends AppCompatActivity {
                     .setAudioAttributes(audioAttributes)
                     .build();
         } else {
-            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(6, AudioManager.STREAM_ACCESSIBILITY, 0);
         }
 
         beebSound = soundPool.load(this, R.raw.beep, 1);

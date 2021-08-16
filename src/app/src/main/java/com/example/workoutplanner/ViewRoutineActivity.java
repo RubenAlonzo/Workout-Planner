@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -53,6 +55,15 @@ public class ViewRoutineActivity extends AppCompatActivity implements RoutineExe
         }
         routineRepository = new RoutineRepository(new DatabaseManager(this));
         LoadRoutineExercises();
+
+        btnStartRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewRoutineActivity.this, WorkoutActivity.class);
+                intent.putExtra(Constants.ROUTINE_EXTRA, currentRoutine);
+                startActivity(intent);
+            }
+        });
     }
 
     private void ConfirmationDialog(){

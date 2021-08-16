@@ -9,38 +9,44 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutPlanner">
-        <activity android:name=".ViewRoutineActivity"
-            android:label="Routine details"
+        <activity android:name=".WorkoutActivity"
+            android:label="Workout"
             android:screenOrientation="portrait"
             android:parentActivityName=".RoutinesActivity"></activity>
-        <activity android:name=".NewRoutineActivity"
+        <activity
+            android:name=".ViewRoutineActivity"
+            android:label="Routine details"
+            android:parentActivityName=".RoutinesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewRoutineActivity"
             android:label="New routine"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".RoutinesActivity"/>
+            android:parentActivityName=".RoutinesActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AlterExerciseActivity"
             android:label="Exercise editor"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ExercisesActivity" />
+            android:parentActivityName=".ExercisesActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NewExerciseActivity"
             android:label="New exercise"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ExercisesActivity" />
+            android:parentActivityName=".ExercisesActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ExercisesActivity"
             android:label="Exercises"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".RoutinesActivity"
             android:label="Routines"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:label="Home">
+            android:label="Home"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

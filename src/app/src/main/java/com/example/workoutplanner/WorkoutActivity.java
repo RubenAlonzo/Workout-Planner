@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.SoundPool;
 import android.media.ToneGenerator;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.widget.Button;
@@ -26,6 +29,9 @@ public class WorkoutActivity extends AppCompatActivity {
 
     TextView tvCurrentExerciseName, tvCurrentRoutineSet, tvCurrentExerciseReps, tvTimerType, tvTimer;
     Button btnTimerController;
+
+    SoundPool soundPool;
+    int beebSound, fiveBeebs;
 
     CountDownTimer timer;
     Routine currentRoutine;
@@ -52,6 +58,23 @@ public class WorkoutActivity extends AppCompatActivity {
             routineExercises = currentRoutine.getRoutineExercises();
             actionBar.setTitle(currentRoutine.getTitle());
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(6)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(6, AudioManager.STREAM_MUSIC, 0);
+        }
+
+        beebSound = soundPool.load(this, R.raw.beep, 1);
+        fiveBeebs = soundPool.load(this, R.raw.five_beeps, 1);
 
         currentSet = 1;
         currentExercisePos = 1;
@@ -108,6 +131,7 @@ public class WorkoutActivity extends AppCompatActivity {
                             tvTimer.setTextColor(getResources().getColor(R.color.purple_200));
                             timeLeft = GetTimeLeftFromMinutes(currentRoutineExercise.getTimeOn());
                             UpdateTimerText();
+                            if(currentExercisePos != 1) StartTimer();
                             isTimeOffDone = false;
                             return;
                         }
@@ -167,8 +191,7 @@ public class WorkoutActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 // Add a beeb
-                final ToneGenerator tg = new ToneGenerator(AudioManager.STREAM_RING, 100);
-                tg.startTone(ToneGenerator.TONE_PROP_BEEP);
+                soundPool.play(fiveBeebs, 1, 1, 0, 0, 1);
                 isTimerRunning = false;
                 btnTimerController.setText("Start");
                 NextExercise();

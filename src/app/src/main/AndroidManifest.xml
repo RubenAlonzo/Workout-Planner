@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.workoutplanner">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/gym"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/gym"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WorkoutPlanner">
+        <activity android:name=".WorkoutActivity"
+            android:label="Workout"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".RoutinesActivity"></activity>
+        <activity
+            android:name=".ViewRoutineActivity"
+            android:label="Routine details"
+            android:parentActivityName=".RoutinesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewRoutineActivity"
+            android:label="New routine"
+            android:parentActivityName=".RoutinesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlterExerciseActivity"
+            android:label="Exercise editor"
+            android:parentActivityName=".ExercisesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewExerciseActivity"
+            android:label="New exercise"
+            android:parentActivityName=".ExercisesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExercisesActivity"
+            android:label="Exercises"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RoutinesActivity"
+            android:label="Routines"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:label="Workout Planner"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
